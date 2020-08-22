@@ -22,7 +22,7 @@ export default function App() {
     
     const repositoriesAux = repositories.map(item => item)
 
-    repositoriesAux[indexId].likes = data.likes;
+    repositoriesAux[indexId].likes += 1;
 
 
     setRepositories(repositoriesAux)
@@ -46,8 +46,8 @@ export default function App() {
         <FlatList 
           data={repositories}
           keyExtractor={item =>  item.id}
-          renderItem={({ item })=> (
-            <View style={styles.repositoryContainer}>
+          renderItem={({ item, index })=> (
+            <View key={index} style={styles.repositoryContainer}>
               <Text style={styles.repository}>{item.title}</Text>
               {
                 item.techs.map(tech => (
@@ -63,7 +63,7 @@ export default function App() {
                 <Text
                   style={styles.likeText}
                   // Remember to replace "1" below with repository ID: {`repository-likes-${repository.id}`}
-                  testID={`repository-likes-1`}
+                  testID={`repository-likes-${item.id}`}
                 >
                 {item.likes} curtidas
                 </Text>
@@ -73,7 +73,7 @@ export default function App() {
                 style={styles.button}
                 onPress={() => handleLikeRepository(item.id)}
                 // Remember to replace "1" below with repository ID: {`like-button-${repository.id}`}
-                testID={`like-button-1`}
+                testID={`like-button-${item.id}`}
               >
                 <Text style={styles.buttonText}>Curtir</Text>
               </TouchableOpacity>
